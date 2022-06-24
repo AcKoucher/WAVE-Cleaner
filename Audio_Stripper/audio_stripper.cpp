@@ -23,17 +23,9 @@ struct Riff
 	std::vector<unsigned char> audio;
 
 	Riff()
+		: chunkSize(0), subChunkOneSize(0), audioFormat(0), numChannels(0), sampleRate(0), 
+		byteRate(0), blockAlign(0), bitPerSample(0), extraParamSize(0), subChunkTwoSize(0)
 	{
-		chunkSize = 0;
-		subChunkOneSize = 0;
-		audioFormat = 0;
-		numChannels = 0;
-		sampleRate = 0;
-		byteRate = 0;
-		blockAlign = 0;
-		bitPerSample = 0;
-		extraParamSize = 0;
-		subChunkTwoSize = 0;
 	}
 };
 
@@ -63,7 +55,7 @@ bool RiffChecker(Riff* input)
 
 void ReadsHeader(Riff* emptyFileChunks, std::ifstream& inputFile)
 {
-	unsigned char extraParamByte;
+	unsigned char extraParamByte = 0;
 
 	inputFile.read((char*)&emptyFileChunks->chunkID, 4);
 	inputFile.read((char*)&emptyFileChunks->chunkSize, 4);
@@ -95,7 +87,7 @@ void ReadsHeader(Riff* emptyFileChunks, std::ifstream& inputFile)
 
 void ReadsAudio(Riff* emptyFileChunks, std::ifstream& inputFile)
 {
-	unsigned char audioByte;
+	unsigned char audioByte = 0;
 
 	for (unsigned int j = 0; j < emptyFileChunks->subChunkTwoSize; j++)
 	{
