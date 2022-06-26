@@ -228,5 +228,6 @@ int main()
 	ReadsAudio(fileChunks, file);
 	PrintHeader(fileChunks);
 	CreatesNewFile(fileChunks);
+	delete fileChunks;
 	std::cin.get();
 }
